@@ -1,6 +1,9 @@
 class TwitterController < ApplicationController
 	http_basic_authenticate_with name: "twitter", password: "twitter"
 	skip_before_action :verify_authenticity_token, only: :pull_tweets
+	before_action :twitter_client
+
+	@@cache = ActiveSupport::Cache::MemoryStore.new
 
 	def main
 		respond_to(:html)
@@ -12,24 +15,21 @@ class TwitterController < ApplicationController
 
 		raise ArgumentError, "No handle given" unless handle
 
-		cached_tweets = Rails.cache.read(handle)
+		@tweets = @@cache.read(handle)
 
-		# If we have cached tweets and they are fresh, render them
-		if !cached_tweets.nil? && (cached_tweets[:timestamp] > 5.minutes.ago)
+		# If we don't have tweets, fetch from Twitter and store
+		if @tweets.nil?
 
-			@tweets = Rails.cache.read(handle)['tweets']
-
-		# Otherwise, pull new tweets and cache them
-		else
-
-			# Pull tweets
 			@tweets = get_tweets(handle)
 
-			# Write tweets to cache
-			hash = {}
-			hash[handle] = {tweets: response, timestamp: Time.now }
-			Rails.cache.write(hash)
+			@@cache.write(handle, @tweets, expires_in: 5.minutes)
 
+		end
+
+		puts @tweets.to_json.inspect
+
+		respond_to do |format|
+			format.json { @tweets.to_json }
 		end
 
 	end
@@ -37,16 +37,24 @@ class TwitterController < ApplicationController
 
 private
 
-	def get_tweets(handle)
-
-		# use twitter gem to pull tweets
-
-		# if error, return with error message in order to prevent caching
-
-	end
-
 	def handle_params
 		params.permit(:handle)
+	end
+
+	def get_tweets(handle)
+		@@twitter_client.search("from:#{handle}", result_type: "recent").take(25)
+	end
+
+	def twitter_client
+
+		# log in the application as a client and memoize it as a class variable
+		@@twitter_client ||= Twitter::REST::Client.new do |config|
+			config.consumer_key = ENV["consumer_key"]
+			config.consumer_secret = ENV["consumer_secret"]
+			config.access_token = ENV["access_token"]
+			config.access_token_secret= ENV["access_token_secret"]
+		end
+
 	end
 
 end

@@ -24,8 +24,9 @@ class TwitterViewer extends React.Component {
 			url: "/pull_tweets",
 			data: {handle: newHandle},
 			method: "POST"
-		}).done(function(msg){
-			this.updateIt(handle, msg)
+		}).done(function(result){
+			console.log(result)
+			//this.updateIt(newHandle, msg)
 		}).fail(function(msg){
 			console.log("There was an error")
 		})
