@@ -11,9 +11,9 @@ class TwitterController < ApplicationController
 
 	def pull_tweets
 
-		handle = handle_params[:handle]
+		handle = handle_params[:handle].downcase
 
-		raise ArgumentError, "No handle given" unless handle
+		raise ArgumentError, "No handle given" unless handle.present?
 
 		@tweets = @@cache.read(handle)
 
@@ -26,10 +26,8 @@ class TwitterController < ApplicationController
 
 		end
 
-		puts @tweets.to_json.inspect
-
 		respond_to do |format|
-			format.json { @tweets.to_json }
+			format.json { render json: @tweets.to_json }
 		end
 
 	end
@@ -41,8 +39,13 @@ private
 		params.permit(:handle)
 	end
 
+	# Return only needed data from Twitter
 	def get_tweets(handle)
-		@@twitter_client.search("from:#{handle}", result_type: "recent").take(25)
+		array = []
+		@@twitter_client.search("from:#{handle}", result_type: "recent").take(25).each do |t|
+			array << [t.created_at, t.text]
+		end
+		array
 	end
 
 	def twitter_client

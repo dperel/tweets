@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import Tweet from 'react'
+import Tweet from './tweet.jsx'
 import $ from 'jquery'
 
 
@@ -11,36 +11,33 @@ class TwitterViewer extends React.Component {
 		super(props);
 		this.state = {handle: "", tweets: []};
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.updateIt = this.updateIt.bind(this);
 	}
 
 	// Pull tweets and append them to DOM
 	handleSubmit(e) {
+
 		e.preventDefault()
 
 		const newHandle = document.getElementById("user-input").value
+		let tweets
 
 		$.ajax({
 			url: "/pull_tweets",
 			data: {handle: newHandle},
 			method: "POST"
-		}).done(function(result){
+		}).done((result) => {
 			console.log(result)
-			//this.updateIt(newHandle, msg)
-		}).fail(function(msg){
-			console.log("There was an error")
+			tweets = result
+			this.setState({handle: newHandle, tweets: tweets})
 		})
-	}
 
-	updateIt(handle, tweets) {
-		this.setState({handle: newHandle, tweets: msg})
 	}
 
 	render() {
 
-		const tweets = this.state.tweets.map((tweet) => {
-			<Tweet content={tweet} />
-		})
+		// const tweets = this.state.tweets.map((tweet) => {
+		// 	<Tweet date={tweet[0]} text={tweet[1]} />
+		// })
 
 		return(
 		  <div>
@@ -54,7 +51,7 @@ class TwitterViewer extends React.Component {
 				</form>
 				<div>
 				View tweets:
-					{tweets}
+					<Tweet date={"asdf"} text={"asdf"} />
 				</div>
 			</div>
 		)
