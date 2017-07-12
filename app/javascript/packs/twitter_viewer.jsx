@@ -44,9 +44,9 @@ class TwitterViewer extends React.Component {
 				<form onSubmit={this.handleSubmit}>
 					<label>
 						Handle:
-						@<input type="text" id="user-input"/>
+						@<input type="text" id="user-input" required={true} placeholder={"For example @nyt"}/>
 					</label>
-					<input className="submit-button" type="submit" value="Submit" />
+					<input className="submit-button" type="submit" value="Submit"  />
 				</form>
 				<div className="tweets-container">
 					{this.state.status}

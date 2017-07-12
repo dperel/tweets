@@ -60,7 +60,7 @@ class TwitterControllerTest < ActionDispatch::IntegrationTest
         resp = client.get('/1.1/application/rate_limit_status.json')
         remaining_before_calls = resp[:resources][:search].values[0][:remaining]
 
-        # call the local endpoint 5 times 
+        # call the local endpoint 5 times
         5.times do
             post '/pull_tweets.json', params: {handle: "target"}, headers: {'HTTP_AUTHORIZATION': ActionController::HttpAuthentication::Basic.encode_credentials("twitter", "twitter")}
         end
@@ -71,6 +71,12 @@ class TwitterControllerTest < ActionDispatch::IntegrationTest
         # If the requests were not cached, we'd exect the difference to be 5, not 1
         assert_equal 1, remaining_before_calls - remaining_after_calls
 
+    end
+
+    test "it throws an error if no handle given" do
+        assert_raises ArgumentError do
+            post '/pull_tweets.json', params: {handle: ""}, headers: {'HTTP_AUTHORIZATION': ActionController::HttpAuthentication::Basic.encode_credentials("twitter", "twitter")}
+        end 
     end
 
 end
