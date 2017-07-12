@@ -19,25 +19,23 @@ class TwitterViewer extends React.Component {
 		e.preventDefault()
 
 		const newHandle = document.getElementById("user-input").value
-		let tweets
 
 		$.ajax({
 			url: "/pull_tweets",
 			data: {handle: newHandle},
 			method: "POST"
 		}).done((result) => {
-			console.log(result)
-			tweets = result
-			this.setState({handle: newHandle, tweets: tweets})
+			this.setState({handle: newHandle, tweets: result})
 		})
 
 	}
 
 	render() {
 
-		// const tweets = this.state.tweets.map((tweet) => {
-		// 	<Tweet date={tweet[0]} text={tweet[1]} />
-		// })
+		const tweets = this.state.tweets.map((tweet) => {
+			<Tweet date={"asdf"} content={"asdf"} />
+		})
+
 
 		return(
 		  <div>
@@ -51,7 +49,8 @@ class TwitterViewer extends React.Component {
 				</form>
 				<div>
 				View tweets:
-					<Tweet date={"asdf"} text={"asdf"} />
+					{tweets}
+					<Tweet date={"asdf"} content={"asdf"} />
 				</div>
 			</div>
 		)

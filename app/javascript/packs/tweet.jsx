@@ -13,7 +13,7 @@ export default class Tweet extends React.Component {
 
 		return (
 			<div>
-				{this.props.date} {this.props.text}
+				{this.props.date} {this.props.content}
 			</div>
 		);
 	}
