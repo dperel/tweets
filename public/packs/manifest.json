@@ -1,0 +1,5 @@
+{
+  "application.js": "http://0.0.0.0:8080/packs/application.js",
+  "tweet.js": "http://0.0.0.0:8080/packs/tweet.js",
+  "twitter_viewer.js": "http://0.0.0.0:8080/packs/twitter_viewer.js"
+}
