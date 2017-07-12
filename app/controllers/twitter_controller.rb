@@ -42,9 +42,23 @@ private
 	# Return only needed data from Twitter
 	def get_tweets(handle)
 		array = []
+
+		# Pull tweets for the user name provided
 		@@twitter_client.search("from:#{handle}", result_type: "recent").take(25).each do |t|
-			array << [t.created_at, t.text]
+
+			content = t.text.dup
+
+			# Linkify the handles by replacing them with links
+			handles = content.scan(/@([a-z0-9_]+)/i).flatten
+			handles.each do |h|
+				content.gsub!(h, "<a href='http://twitter.com/#{h}'>#{h}</a>")
+			end
+
+			array << [t.created_at, content]
+
 		end
+
+		# Return the array of tweets and dates
 		array
 	end
 

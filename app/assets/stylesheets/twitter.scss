@@ -10,7 +10,7 @@ body {
 }
 
 .tweets-container {
-	height: 700px; 
+	height: 700px;
 	overflow-y: scroll
 }
 
@@ -23,4 +23,12 @@ body {
 
 .tweet:nth-child(even) {
 	background-color: #1da9f9
+}
+
+.tweet-date {
+	color: white
+}
+
+.tweet-content {
+
 }
