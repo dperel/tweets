@@ -32,8 +32,9 @@ class TwitterViewer extends React.Component {
 
 	render() {
 
-		const tweets = this.state.tweets.map((tweet) => {
-			<Tweet date={"asdf"} content={"asdf"} />
+		let tweets = []
+		this.state.tweets.map((tweet) => {
+			tweets.push(<Tweet date={tweet[0]} content={tweet[1]} />)
 		})
 
 
