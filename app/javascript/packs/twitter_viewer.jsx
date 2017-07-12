@@ -34,12 +34,12 @@ class TwitterViewer extends React.Component {
 
 		let tweets = []
 		this.state.tweets.map((tweet) => {
-			tweets.push(<Tweet date={tweet[0]} content={tweet[1]} />)
+			let date = new Date(tweet[0]).toLocaleString()
+			tweets.push(<Tweet date={date} content={tweet[1]} key={date} />)
 		})
 
-
 		return(
-		  <div>
+		  <div className="twitter-viewer">
 			  <div>Type in a username and hit enter to see 25 of their tweets</div>
 				<form onSubmit={this.handleSubmit}>
 					<label>
@@ -48,7 +48,7 @@ class TwitterViewer extends React.Component {
 					</label>
 					<input type="submit" value="Submit" />
 				</form>
-				<div>
+				<div className="tweets-container">
 				View tweets:
 					{tweets}
 					<Tweet date={"asdf"} content={"asdf"} />
@@ -57,7 +57,6 @@ class TwitterViewer extends React.Component {
 		)
 	}
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

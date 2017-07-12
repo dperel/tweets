@@ -1,0 +1,26 @@
+body {
+	font-family: helvetica
+}
+
+.twitter-viewer {
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center
+}
+
+.tweets-container {
+	height: 700px; 
+	overflow-y: scroll
+}
+
+.tweet {
+	background-color: #427df4;
+	padding: 10px;
+	max-width: 200px;
+	width: 200px
+}
+
+.tweet:nth-child(even) {
+	background-color: #1da9f9
+}
