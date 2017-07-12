@@ -1,5 +1,10 @@
 body {
-	font-family: helvetica
+	font-family: helvetica;
+	background-color: #cffcfb
+}
+
+form {
+	padding: 5px
 }
 
 .twitter-viewer {
@@ -7,6 +12,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center
+}
+
+.title-line {
+	font-size: 20px;
+	padding: 5px
 }
 
 .tweets-container {
@@ -29,6 +39,9 @@ body {
 	color: white
 }
 
-.tweet-content {
-
+.submit-button {
+	border-radius: 5px;
+	border-color: white;
+	background-color: #4253f4;
+	color: white
 }

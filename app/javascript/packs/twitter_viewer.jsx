@@ -9,7 +9,7 @@ import $ from 'jquery'
 class TwitterViewer extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {handle: "", tweets: []};
+		this.state = {handle: "", tweets: [], status: "Search for some tweets!"};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -25,7 +25,7 @@ class TwitterViewer extends React.Component {
 			data: {handle: newHandle},
 			method: "POST"
 		}).done((result) => {
-			this.setState({handle: newHandle, tweets: result})
+			this.setState({handle: newHandle, tweets: result, status: result.length? "" : "No results for that username. Sorry!"})
 		})
 
 	}
@@ -40,18 +40,17 @@ class TwitterViewer extends React.Component {
 
 		return(
 		  <div className="twitter-viewer">
-			  <div>Type in a username and hit enter to see 25 of their tweets</div>
+			  <div className="title-line">Type in a username and hit enter to see 25 of their tweets</div>
 				<form onSubmit={this.handleSubmit}>
 					<label>
 						Handle:
 						@<input type="text" id="user-input"/>
 					</label>
-					<input type="submit" value="Submit" />
+					<input className="submit-button" type="submit" value="Submit" />
 				</form>
 				<div className="tweets-container">
-				View tweets:
+					{this.state.status}
 					{tweets}
-					<Tweet date={"asdf"} content={"asdf"} />
 				</div>
 			</div>
 		)
