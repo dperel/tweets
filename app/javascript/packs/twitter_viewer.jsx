@@ -40,10 +40,10 @@ class TwitterViewer extends React.Component {
 
 		return(
 		  <div className="twitter-viewer">
-			  <div className="title-line">Type in a username and hit enter to see 25 of their tweets</div>
+			  <div className="title-line">Type in a Twitter username and hit enter to see 25 tweets</div>
 				<form onSubmit={this.handleSubmit}>
 					<label>
-						Handle:
+						<span className="input-label"> Handle:</span>
 						@<input type="text" id="user-input" required={true} placeholder={"For example @nyt"}/>
 					</label>
 					<input className="submit-button" type="submit" value="Submit"  />

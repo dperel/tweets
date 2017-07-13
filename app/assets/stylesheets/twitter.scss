@@ -1,10 +1,29 @@
 body {
 	font-family: helvetica;
-	background-color: #cffcfb
+	background-color: white;
+	font-size: 18px
 }
 
 form {
 	padding: 5px
+}
+
+input[type=text] {
+	border-radius: 5px;
+	border: 1px solid lightgray;
+	width: 200px;
+	height: 30px;
+	margin: 10px;
+	font-size: 18px
+}
+
+input[type=submit] {
+	border-radius: 5px;
+	border-color: white;
+	background-color: #4253f4;
+	color: white;
+	height: 30px;
+	font-size: 18px
 }
 
 .twitter-viewer {
@@ -16,7 +35,12 @@ form {
 
 .title-line {
 	font-size: 20px;
-	padding: 5px
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #00aced;
+	color: white;
+	font-weight: 600;
+
 }
 
 .tweets-container {
@@ -27,21 +51,18 @@ form {
 .tweet {
 	background-color: #427df4;
 	padding: 10px;
+	margin: 5px 10px 5px 0px;
 	max-width: 200px;
-	width: 200px
+	width: 200px;
+	border: 1px solid black;
+	border-radius: 5px
 }
 
 .tweet:nth-child(even) {
-	background-color: #1da9f9
+	background-color: #1da9f9;
+	margin: 5px 0px 5px 10px;
 }
 
 .tweet-date {
-	color: white
-}
-
-.submit-button {
-	border-radius: 5px;
-	border-color: white;
-	background-color: #4253f4;
 	color: white
 }
