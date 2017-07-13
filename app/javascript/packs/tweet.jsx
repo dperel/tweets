@@ -9,18 +9,15 @@ export default class Tweet extends React.Component {
 		super(props);
 	}
 
-
 	render() {
-		let text = this.props.content
 		return (
 			<div className="tweet">
 				<div className="tweet-date">
 					{this.props.date}
 				</div>
-				<div className="tweet-content" dangerouslySetInnerHTML={ {__html: text} }>
+				<div dangerouslySetInnerHTML={ {__html: this.props.content} }>
 				</div>
 			</div>
 		);
 	}
-
 }

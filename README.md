@@ -1,25 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application allows you to view up to 25 recent tweets from any Twitter user of your choice.
 
-Things you may want to cover:
+To get started, go to http://www.twitterviewer.herokuapp.com and type in "twitter" as both the name and password.
 
-* Ruby version
+To run it locally, clone the repo, `bundle install`, and `foreman start -f Procfile`. You can also `rake test`.
 
-* System dependencies
+About this app:
 
-* Configuration
+* Built using Rails 5.1 with React via the Webpacker gem
 
-* Database creation
+* No page refreshes necessary ✅
 
-* Database initialization
+* Requests cached for 5 minutes ✅
 
-* How to run the test suite
+* Integration tests to cover main features ✅
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# tweets
+* HTTP Basic Auth to keep it private ✅

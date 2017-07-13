@@ -11,11 +11,16 @@ class TwitterController < ApplicationController
 
 	def pull_tweets
 
-		handle = handle_params[:handle].downcase
+		handle = handle_params[:handle].strip.downcase
 
-		raise ArgumentError, "No handle given" unless handle.present?
+		# If we have a handle, check the cache to see if we have the tweets already
+		if handle.present?
+			@tweets = @@cache.read(handle)
+		else
 
-		@tweets = @@cache.read(handle)
+			# Gracefully handle totally blank input
+			@tweets = []
+		end
 
 		# If we don't have tweets, fetch from Twitter and store
 		if @tweets.nil?
@@ -43,19 +48,25 @@ private
 	def get_tweets(handle)
 		array = []
 
-		# Pull tweets for the user name provided
-		@@twitter_client.search("from:#{handle}", result_type: "recent").take(25).each do |t|
+		begin
+			# Pull tweets and arrange as an array for caching and use in the front end
+			@@twitter_client.search("from:#{handle}", result_type: "recent").take(25).each do |t|
 
-			content = t.text.dup
+				content = t.text.dup
 
-			# Linkify the handles by replacing them with links
-			handles = content.scan(/@([a-z0-9_]+)/i).flatten
-			handles.each do |h|
-				content.gsub!(h, "<a href='http://twitter.com/#{h}'>#{h}</a>")
+				# Linkify the handles by replacing them with links
+				handles = content.scan(/@([a-z0-9_]+)/i).flatten
+				handles.each do |h|
+					content.gsub!(h, "<a href='http://twitter.com/#{h}'>#{h}</a>")
+				end
+
+				array << [t.created_at, content]
+
 			end
 
-			array << [t.created_at, content]
-
+		# Rate limiting and other errors should be displayed
+		rescue Twitter::Error => error
+			flash[:error] = error
 		end
 
 		# Return the array of tweets and dates

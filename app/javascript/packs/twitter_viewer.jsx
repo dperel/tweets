@@ -26,6 +26,9 @@ class TwitterViewer extends React.Component {
 			method: "POST"
 		}).done((result) => {
 			this.setState({handle: newHandle, tweets: result, status: result.length? "" : "No results for that username. Sorry!"})
+		}).fail((result) => {
+			console.log(result)
+			this.setState({status: 'There was an error fetching your tweets : / ', tweets: []})
 		})
 
 	}
@@ -40,11 +43,11 @@ class TwitterViewer extends React.Component {
 
 		return(
 		  <div className="twitter-viewer">
-			  <div className="title-line">Type in a Twitter username and hit enter to see 25 tweets</div>
+			  <div className="title-line">Type in a Twitter username and hit enter to see 25 recent tweets</div>
 				<form onSubmit={this.handleSubmit}>
 					<label>
-						<span className="input-label"> Handle:</span>
-						@<input type="text" id="user-input" required={true} placeholder={"For example @nyt"}/>
+						<span className="input-label"> Handle: @</span>
+						<input type="text" id="user-input" required={true} placeholder={"For example @nyt"}/>
 					</label>
 					<input className="submit-button" type="submit" value="Submit"  />
 				</form>

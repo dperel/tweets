@@ -73,10 +73,4 @@ class TwitterControllerTest < ActionDispatch::IntegrationTest
 
     end
 
-    test "it throws an error if no handle given" do
-        assert_raises ArgumentError do
-            post '/pull_tweets.json', params: {handle: ""}, headers: {'HTTP_AUTHORIZATION': ActionController::HttpAuthentication::Basic.encode_credentials("twitter", "twitter")}
-        end 
-    end
-
 end
