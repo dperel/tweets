@@ -73,4 +73,10 @@ class TwitterControllerTest < ActionDispatch::IntegrationTest
 
     end
 
+    test "blank input handles are handled gracefully" do
+        post '/pull_tweets.json', params: {handle: ""}, headers: {'HTTP_AUTHORIZATION': ActionController::HttpAuthentication::Basic.encode_credentials("twitter", "twitter")}
+        assert_equal 200, status
+        assert_empty JSON.parse(response.body)
+    end
+
 end
