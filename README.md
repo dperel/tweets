@@ -4,7 +4,7 @@ This application allows you to view up to 25 recent tweets from any Twitter user
 
 To get started, go to http://www.twitterviewer.herokuapp.com and type in "twitter" as both the name and password.
 
-To run it locally, clone the repo, `bundle install`, and `foreman start -f Procfile`. You can also `rake test`.
+To run it locally, clone the repo, `bundle install`, `npm install`, and `foreman start -f Procfile`. You can also `rake test`.
 
 ## Overview of the app:
 
